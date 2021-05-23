@@ -126,6 +126,30 @@ public class RoomController extends HttpServlet {
             }
             //END OF UPDATE ROOM
             
+            //GET ALL RENT BY ROOM
+            if(request.getParameter("task").equals("getAllRoomByBed")){
+                JSONArray returnValue = new JSONArray(); 
+                if(!request.getParameter("bed").isEmpty()){
+                    
+                    Integer bed = Integer.parseInt(request.getParameter("bed"));
+                    
+                    Room room = new Room(0, "", bed, "", 0);
+                    
+                    List<Room> rents = RoomService.getAllRoomByBed(room);
+                    
+                    if(rents.isEmpty()){
+                        JSONObject obj = new JSONObject();
+                        obj.put("result", "Nincs ennyi ággyal rendelkező szoba");
+                        returnValue.put(obj);
+                        out.print(returnValue.toString());
+                    }
+                    else{
+                        out.print(returnValue.toString());
+                    }
+                } 
+            }
+            //ENDOF GET ALL RENT BY ROOM
+            
         }
         catch(Exception ex){
             System.out.print("JSON Exception van!");

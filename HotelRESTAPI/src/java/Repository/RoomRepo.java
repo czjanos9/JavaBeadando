@@ -96,4 +96,31 @@ public class RoomRepo {
         }
     }
    
+    public static List<Room> getAllRoomByBed(Room input){
+        List<Room> result = new ArrayList();
+        try{
+            EntityManager em = Database.getDbConn();
+            StoredProcedureQuery spq = em.createStoredProcedureQuery("getAllRoomByBed");
+            
+            spq.registerStoredProcedureParameter("bed", Integer.class, ParameterMode.IN);
+           
+            spq.setParameter("bed", input.getRoomBed());
+
+            //spq.execute();
+            
+            List<Object[]> rents = spq.getResultList();
+            for(Object[] rent : rents){
+                int id = Integer.parseInt(rent[0].toString());
+                Room r = em.find(Room.class, id);
+                result.add(r);
+            }
+        }
+        catch(Exception ex){
+            System.out.print(ex);
+        }
+        finally{
+            return result;
+        }
+    }
+    
 }

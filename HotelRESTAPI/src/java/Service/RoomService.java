@@ -42,4 +42,8 @@ public class RoomService {
             return "Sikertelen update!";
         }
     }
+    
+    public static List<Room> getAllRoomByBed(Room room){
+        return RoomRepo.getAllRoomByBed(room);
+    }
 }
